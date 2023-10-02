@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import colors from "../../styles/colors";
 
 function Tag({ text }) {
   const [isActive, setIsActive] = useState(false);
@@ -14,10 +15,13 @@ function Tag({ text }) {
       variant="contained"
       sx={{
         height: 40,
-        backgroundColor: isActive ? "#FFD699" : "#575757",
+        backgroundColor: isActive ? `${colors.secondary}` : `${colors.disable}`,
+        color: isActive ? "black" : "white",
         width: "fit-content",
         "&:hover": {
-          backgroundColor: isActive ? "#FFD699" : "#575757",
+          backgroundColor: isActive
+            ? `${colors.secondary}`
+            : `${colors.disable}`,
         },
       }}
       onClick={toggleButton}

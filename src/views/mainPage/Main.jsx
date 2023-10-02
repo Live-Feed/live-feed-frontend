@@ -1,13 +1,19 @@
+import { useNavigate } from "react-router-dom";
+
 import { styled } from "styled-components";
-import Dropdown from "../components/ui/Dropdown";
-import SearchBar from "../components/ui/SearchBar";
-import Tag from "../components/ui/Tag";
+
+import Dropdown from "../../components/ui/Dropdown";
+import SearchBar from "../../components/ui/SearchBar";
+import Tag from "../../components/ui/Tag";
+
+import colors from "../../styles/colors";
 
 const SearchBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 50px 0px;
+  margin-bottom: 50px;
+  gap: 15px;
 `;
 
 const TagBox = styled.div`
@@ -19,7 +25,24 @@ const TagBox = styled.div`
   grid-template-rows: repeat(4, 1fr);
 `;
 
+const Button = styled.div`
+  height: 60px;
+  width: 200px;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: ${colors.secondary};
+  cursor: pointer;
+`;
+
 export default function Main() {
+  const navigate = useNavigate();
+
   return (
     <div>
       <SearchBox>
@@ -35,6 +58,7 @@ export default function Main() {
         <Tag text="간장공장공장장" />
         <Tag text="직장인월급" />
       </TagBox>
+      <Button onClick={(e) => navigate("/list")}>결과보기</Button>
     </div>
   );
 }

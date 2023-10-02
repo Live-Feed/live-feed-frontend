@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import colors from "../../styles/colors";
 import { ReactComponent as LOGO } from "../../assets/images/LOGO.svg";
@@ -26,12 +28,19 @@ const Title = styled.span`
   color: ${colors.secondary};
 `;
 
+const LogoTitle = styled.div`
+  cursor: pointer;
+`;
+
 export default function NavBar() {
+  const navigate = useNavigate();
   return (
     <Nav>
       <Container>
-        <LOGO width={"34px"} fill={colors.secondary} />
-        <Title>Live Feed</Title>
+        <LogoTitle onClick={() => navigate("/")}>
+          <LOGO width={"30px"} height={"40px"} fill={colors.secondary} />
+          <Title>Live Feed</Title>
+        </LogoTitle>
       </Container>
     </Nav>
   );
