@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { styled } from "styled-components";
@@ -43,20 +44,32 @@ const Button = styled.div`
 export default function Main() {
   const navigate = useNavigate();
 
+  const [inputText, setInputText] = useState("");
+  const [textArray, setTextArray] = useState([]);
+
+  const handleDelete = (index) => {
+    // 선택한 항목을 배열에서 제거합니다.
+    const updatedArray = textArray.filter((_, i) => i !== index);
+    setTextArray(updatedArray);
+
+    // 로컬 스토리지에 배열을 업데이트된 배열로 다시 저장합니다.
+    localStorage.setItem("textArray", JSON.stringify(updatedArray));
+  };
   return (
     <div>
       <SearchBox>
         <Dropdown />
-        <SearchBar />
+        <SearchBar
+          inputText={inputText}
+          setInputText={setInputText}
+          textArray={textArray}
+          setTextArray={setTextArray}
+        />
       </SearchBox>
       <TagBox>
-        <Tag text="강호동" />
-        <Tag text="빅마마" />
-        <Tag text="애플워치" />
-        <Tag text="맥북" />
-        <Tag text="라이브피드" />
-        <Tag text="간장공장공장장" />
-        <Tag text="직장인월급" />
+        {textArray.map((text, index) => (
+          <Tag key={index} text={text} onDelete={() => handleDelete(index)} />
+        ))}
       </TagBox>
       <Button onClick={(e) => navigate("/list")}>결과보기</Button>
     </div>

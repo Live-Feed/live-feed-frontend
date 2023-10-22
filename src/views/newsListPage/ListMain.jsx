@@ -3,6 +3,8 @@ import { styled } from "styled-components";
 import Tag from "../../components/ui/Tag";
 import Article from "./Article";
 
+import colors from "../../styles/colors";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,12 +23,16 @@ const TagBox = styled.div`
 
 const ArticleBox = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
-  gap: 50px;
+  /* gap: 50px; */
   overflow: scroll;
-  height: calc(100vh - 18rem);
+  height: calc(100vh - 20rem);
   width: 100%;
-  border: 1px solid red;
+  border: 2px solid ${colors.MediumGray};
+  border-radius: 20px;
+  background-color: white;
+  padding: 30px 20px;
 `;
 
 export default function ListMain() {

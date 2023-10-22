@@ -1,27 +1,25 @@
 import { useState } from "react";
 
 import { styled } from "styled-components";
-
-import Modal from "@mui/material/Modal";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
+import { Typography, Modal } from "@mui/material";
+// import IconButton from '@mui/material/IconButton';
+// import CloseIcon from '@mui/icons-material/Close';
 
 import ArticleThumbnail from "../../assets/images/ariticle_thumbnail.png";
 import ArticleImg from "../../assets/images/article_main_img.jpg";
+
 import colors from "../../styles/colors";
 
 const Container = styled.div`
   width: 735px;
   height: 280px;
-  padding: 30px;
+  padding: 20px;
   display: flex;
   gap: 15px;
   background-color: white;
-  border-radius: 20px;
+  border-bottom: 2px solid ${colors.LightGray};
+  /* border-radius: 20px; */
   cursor: pointer;
-  h1 {
-    margin: 0;
-  }
 `;
 
 const Left = styled.div`
@@ -35,6 +33,11 @@ const Right = styled.div`
   flex-direction: column;
   gap: 10px;
   justify-content: flex-start;
+`;
+
+const NewsTitle = styled.div`
+  font-size: 16px;
+  font-weight: 500;
 `;
 
 const Media = styled.div`
@@ -58,16 +61,15 @@ const Paper = styled.div`
   border-radius: 20px;
 `;
 
-const CloseBtn = styled(IconButton)`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  margin: 10px;
-`;
+// const CloseBtn = styled(IconButton)`
+//   position: absolute;
+//   top: 10px;
+//   right: 10px;
+//   margin: 10px;
+// `;
 
 const Img = styled.img`
-  width: 267px;
-  height: 160px;
+  width: 200px;
 `;
 
 const Contents = styled.div`
@@ -91,11 +93,11 @@ export default function Article() {
     <>
       <Container onClick={handleOpen}>
         <Left>
-          <Img src={ArticleThumbnail} />
+          <Img src={ArticleThumbnail} alt="article_thumbnatil" />
           <div>25분전</div>
         </Left>
         <Right>
-          <h1>기적의 ‘무적 함대’ 여자월드컵 사상 첫 결승행</h1>
+          <NewsTitle>기적의 ‘무적 함대’ 여자월드컵 사상 첫 결승행</NewsTitle>
           <Media>머니투데이</Media>
           <div
             style={{
@@ -104,9 +106,7 @@ export default function Article() {
           >
             득점 없이 흐른 80분은 마지막 10분간 펼쳐진 명승부의
             예고편이었습니다.후반 36분 에르모소의 날카로운 크로스가 스웨덴
-            수비를 맞고 흐르자 스페인의 파라유엘로가 그대로 오른발로
-            연결합니다.8강전 연장 승부 결승 골의 주인공이었던 19살
-            공격수는...더보기
+            수비를 맞고 ...더보기
           </div>
         </Right>
       </Container>
@@ -133,6 +133,7 @@ export default function Article() {
           </a>
           <img
             src={ArticleImg}
+            alt="article_img"
             width="600px"
             style={{
               marginBottom: "20px",

@@ -3,7 +3,7 @@ import { Button, Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import colors from "../../styles/colors";
 
-function Tag({ text }) {
+function Tag({ text, onDelete }) {
   const [isActive, setIsActive] = useState(false);
 
   const toggleButton = () => {
@@ -15,6 +15,7 @@ function Tag({ text }) {
       variant="contained"
       sx={{
         height: 40,
+        padding: "0.5rem",
         backgroundColor: isActive ? `${colors.secondary}` : `${colors.disable}`,
         color: isActive ? "black" : "white",
         width: "fit-content",
@@ -31,10 +32,11 @@ function Tag({ text }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          gap: "0.5rem",
         }}
       >
         <span>{text}</span>
-        <IconButton>
+        <IconButton sx={{ padding: "0px" }} onClick={onDelete}>
           <CloseIcon />
         </IconButton>
       </Box>
