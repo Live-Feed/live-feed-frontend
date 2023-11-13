@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 
 import { styled } from "styled-components";
 import { Typography, Modal } from "@mui/material";
@@ -77,8 +79,59 @@ const Contents = styled.div`
   line-height: 1.5rem;
 `;
 
-export default function Article() {
+export default function Article({ item }) {
   const [open, setOpen] = useState(false);
+  const [response, setResponse] = useState([]);
+
+  // 이 코드는 axios의 mock 기능을 활성화합니다.
+  const mock = new MockAdapter(axios);
+
+  // 예를 들어, GET 요청에 대한 목 데이터를 설정하는 방법은 다음과 같습니다.
+  mock.onGet("/api/list/articles").reply(200, {
+    success: true,
+    status: 200,
+    message: "기사 상세 조회 성공했습니다.",
+    data: {
+      articleId: 1,
+      title: "기적의 무적함대...",
+      pressCompany: "머니투데이",
+      reporter: "--- 기자",
+      publicationTime: "2023.08.14 오전 07:02",
+      articleUrl: "실제 기사 주소",
+      contentHeader: "html 기사 본문 헤더",
+      contentBody: "html 기사 본문 바디",
+    },
+  });
+
+  useEffect(() => {
+    const mock = new MockAdapter(axios);
+
+    // GET 요청에 대한 목 데이터 설정
+    mock.onGet("/api/list/articles").reply(200, {
+      success: true,
+      status: 200,
+      message: "기사 상세 조회 성공했습니다.",
+      data: {
+        articleId: 1,
+        title: "기적의 무적함대...",
+        pressCompany: "머니투데이",
+        reporter: "--- 기자",
+        publicationTime: "2023.08.14 오전 07:02",
+        articleUrl: "실제 기사 주소",
+        contentHeader: "html 기사 본문 헤더",
+        contentBody: "html 기사 본문 바디",
+      },
+    });
+
+    axios
+      .get("/api/list/articles")
+      .then((response) => {
+        setResponse(response.data.data); // 목 데이터를 받습니다.
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -89,30 +142,29 @@ export default function Article() {
     setOpen(false);
     console.log("close");
   };
+
   return (
     <>
       <Container onClick={handleOpen}>
         <Left>
-          <Img src={ArticleThumbnail} alt="article_thumbnatil" />
-          <div>25분전</div>
+          <Img src={item.photo} alt="article_thumbnatil" />
+          <div>{item.minutesAgo}</div>
         </Left>
         <Right>
-          <NewsTitle>기적의 ‘무적 함대’ 여자월드컵 사상 첫 결승행</NewsTitle>
-          <Media>머니투데이</Media>
+          <NewsTitle>{item.title}</NewsTitle>
+          <Media>{item.pressCompany}</Media>
           <div
             style={{
               lineHeight: "1.5rem",
             }}
           >
-            득점 없이 흐른 80분은 마지막 10분간 펼쳐진 명승부의
-            예고편이었습니다.후반 36분 에르모소의 날카로운 크로스가 스웨덴
-            수비를 맞고 ...더보기
+            {item.content}
           </div>
         </Right>
       </Container>
       <ModalContainer open={open} onClose={handleClose}>
         <Paper>
-          <h1>기적의 ‘무적 함대’ 여자월드컵 사상 첫 결승행</h1>
+          <h1>{response.contentHeader}</h1>
           <div
             style={{
               display: "flex",
@@ -120,11 +172,13 @@ export default function Article() {
               marginBottom: "20px",
             }}
           >
-            <span>입력2023.08.14. 오전 7:02 김승찬 기자</span>
-            <span>머니투데이</span>
+            <span>
+              입력 {response.publicationTime} {response.reporter}
+            </span>
+            <span>{response.pressCompany}</span>
           </div>
           <a
-            href="https://news.kbs.co.kr/news/pc/view/view.do?ncd=7748939"
+            href={response.articleUrl}
             style={{
               marginBottom: "20px",
             }}
@@ -139,27 +193,7 @@ export default function Article() {
               marginBottom: "20px",
             }}
           />
-          <Contents>
-            득점 없이 흐른 80분은 마지막 10분간 펼쳐진 명승부의
-            예고편이었습니다. 후반 36분 에르모소의 날카로운 크로스가 스웨덴
-            수비를 맞고 흐르자 스페인의 파라유엘로가 그대로 오른발로 연결합니다.
-            8강전 연장 승부 결승 골의 주인공이었던 19살 공격수는 이번에도 교체
-            투입돼 결정적인 골을 넣었습니다. 하지만 스웨덴의 반격도
-            만만찮았습니다. 후반 43분 후르티그가 머리로 공을 떨구자
-            블롬크비스트가 감각적인 발리슛으로 승부를 원점으로 돌렸습니다.
-            모두가 연장전을 예감한 순간, 그래도 스페인은 계획이 있었습니다.
-            실점한지 불과 1분 뒤 얻은 코너킥이 스웨덴 수비의 예상을 깨고
-            카르모나에게 향했고, 골 넣는 수비수 카르모나는 절묘한 왼발로
-            결승으로 향하는 문을 직접 열었습니다. 극적인 2대 1 승리를 결정짓는
-            골이 터지자 스페인 감독은 터치라인을 따라 달리며 기쁨을 감추지
-            못했습니다. 상대 전적 4무 7패의 열세에 있었던 스페인은 가장 중요한
-            순간 스웨덴을 넘어서며 사상 처음으로 월드컵 결승 무대를 밟았습니다.
-            경기가 끝난 뒤엔 승패를 초월한 두 선수의 우정이 눈길을
-            사로잡았습니다. 유니폼을 바꿔입은 스웨덴의 롤포가 소속팀 바르셀로나
-            동료인 스페인의 본마티를 들어 올리며 축하해줬습니다. 기적의 팀
-            스페인은 오는 20일 호주-잉글랜드전 승자를 상대로 첫 우승이라는 새
-            역사에 도전합니다. KBS 뉴스 박선우입니다. 영상편집:송장섭
-          </Contents>
+          <Contents>{response.contentBody}</Contents>
         </Paper>
       </ModalContainer>
     </>
