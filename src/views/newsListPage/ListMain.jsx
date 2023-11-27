@@ -48,44 +48,6 @@ export default function ListMain() {
   const { state } = useLocation();
   console.log(state);
   useEffect(() => {
-    // 이 코드는 axios의 mock 기능을 활성화합니다.
-    const mock = new MockAdapter(axios);
-
-    // 예를 들어, GET 요청에 대한 목 데이터를 설정하는 방법은 다음과 같습니다.
-    mock
-      .onGet(
-        `/api/list/articles?keyword=${state.keyword}&type=${state.type}&size=${state.size}&sort=${state.sort}&lastId=${state.lastId}&pit=${state.pit}`
-      )
-      .reply(200, {
-        success: true,
-        status: 200,
-        message: "기사 조회 성공했습니다.",
-        data: {
-          articles: [
-            {
-              articleId: 1,
-              title: "기적의 무적함대...",
-              pressCompany: "머니투데이",
-              content: "기사 요약 내용",
-              photo: ArticleThumbnail,
-              minutesAgo: "20분 전",
-            },
-            {
-              articleId: 2,
-              title: "기적의 무적함대...",
-              pressCompany: "머니투데이",
-              content: "기사 요약 내용",
-              photo: ArticleThumbnail,
-              minutesAgo: "1시간 전",
-            },
-          ],
-          isLast: false,
-          lastId: 5,
-          pit: "asdfaswersdf",
-        },
-      });
-
-    // 이제 실제 요청을 보내는 코드를 사용하여 목 데이터가 반환됩니다.
     axios
       .get(
         `/api/list/articles?keyword=${state.keyword}&type=${state.type}&size=${state.size}&sort=${state.sort}&lastId=${state.lastId}&pit=${state.pit}`

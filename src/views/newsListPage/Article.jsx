@@ -85,24 +85,6 @@ export default function Article({ item }) {
 
   useEffect(() => {
     // 이 코드는 axios의 mock 기능을 활성화합니다.
-    const mock = new MockAdapter(axios);
-
-    // GET 요청에 대한 목 데이터 설정
-    mock.onGet(`/api/detail/articles/${item.articleId}`).reply(200, {
-      success: true,
-      status: 200,
-      message: "기사 상세 조회 성공했습니다.",
-      data: {
-        articleId: 1,
-        title: "기적의 무적함대...",
-        pressCompany: "머니투데이",
-        reporter: "--- 기자",
-        publicationTime: "2023.08.14 오전 07:02",
-        articleUrl: "실제 기사 주소",
-        contentHeader: "html 기사 본문 헤더",
-        contentBody: "html 기사 본문 바디",
-      },
-    });
 
     axios
       .get(`/api/detail/articles/${item.articleId}`)
