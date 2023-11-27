@@ -9,7 +9,7 @@ function SearchBar(props) {
     if (storedTextArray) {
       props.setTextArray(storedTextArray);
     }
-  }, []);
+  }, [props]);
 
   const handleInputChange = (event) => {
     props.setInputText(event.target.value);
@@ -23,6 +23,12 @@ function SearchBar(props) {
 
       // 로컬 스토리지에 배열을 저장합니다.
       localStorage.setItem("textArray", JSON.stringify(updatedArray));
+
+      // api에 보내줄 데이터도 수정합니다.
+      props.setRequestData({
+        ...props.requestData,
+        keyword: JSON.stringify(updatedArray),
+      });
 
       // 입력 필드를 초기화합니다.
       props.setInputText("");

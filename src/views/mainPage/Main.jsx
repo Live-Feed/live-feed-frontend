@@ -47,6 +47,15 @@ export default function Main() {
   const [inputText, setInputText] = useState("");
   const [textArray, setTextArray] = useState([]);
 
+  const [requestData, setRequestData] = useState({
+    keyword: JSON.parse(localStorage.getItem("textArray")),
+    type: localStorage.getItem("type"),
+    size: 10,
+    sort: "id,desc",
+    lastId: "기존에 전달받은 아이디",
+    pit: "기존에 전달받은 pit값",
+  });
+
   const handleDelete = (index) => {
     // 선택한 항목을 배열에서 제거합니다.
     const updatedArray = textArray.filter((_, i) => i !== index);
@@ -54,7 +63,12 @@ export default function Main() {
 
     // 로컬 스토리지에 배열을 업데이트된 배열로 다시 저장합니다.
     localStorage.setItem("textArray", JSON.stringify(updatedArray));
+    setRequestData({ ...requestData, keyword: JSON.stringify(updatedArray) });
   };
+
+  useEffect(() => {
+    console.log(requestData);
+  }, [requestData]);
   return (
     <div>
       <SearchBox>
@@ -64,6 +78,8 @@ export default function Main() {
           setInputText={setInputText}
           textArray={textArray}
           setTextArray={setTextArray}
+          requestData={requestData}
+          setRequestData={setRequestData}
         />
       </SearchBox>
       <TagBox>
@@ -71,7 +87,9 @@ export default function Main() {
           <Tag key={index} text={text} onDelete={() => handleDelete(index)} />
         ))}
       </TagBox>
-      <Button onClick={(e) => navigate("/list")}>결과보기</Button>
+      <Button onClick={(e) => navigate("/list", { state: requestData })}>
+        결과보기
+      </Button>
     </div>
   );
 }

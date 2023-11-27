@@ -3,11 +3,11 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 import { styled } from "styled-components";
-import { Typography, Modal } from "@mui/material";
+import { Modal } from "@mui/material";
 // import IconButton from '@mui/material/IconButton';
 // import CloseIcon from '@mui/icons-material/Close';
 
-import ArticleThumbnail from "../../assets/images/ariticle_thumbnail.png";
+// import ArticleThumbnail from "../../assets/images/ariticle_thumbnail.png";
 import ArticleImg from "../../assets/images/article_main_img.jpg";
 
 import colors from "../../styles/colors";
@@ -83,31 +83,12 @@ export default function Article({ item }) {
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([]);
 
-  // 이 코드는 axios의 mock 기능을 활성화합니다.
-  const mock = new MockAdapter(axios);
-
-  // 예를 들어, GET 요청에 대한 목 데이터를 설정하는 방법은 다음과 같습니다.
-  mock.onGet("/api/list/articles").reply(200, {
-    success: true,
-    status: 200,
-    message: "기사 상세 조회 성공했습니다.",
-    data: {
-      articleId: 1,
-      title: "기적의 무적함대...",
-      pressCompany: "머니투데이",
-      reporter: "--- 기자",
-      publicationTime: "2023.08.14 오전 07:02",
-      articleUrl: "실제 기사 주소",
-      contentHeader: "html 기사 본문 헤더",
-      contentBody: "html 기사 본문 바디",
-    },
-  });
-
   useEffect(() => {
+    // 이 코드는 axios의 mock 기능을 활성화합니다.
     const mock = new MockAdapter(axios);
 
     // GET 요청에 대한 목 데이터 설정
-    mock.onGet("/api/list/articles").reply(200, {
+    mock.onGet(`/api/detail/articles/${item.articleId}`).reply(200, {
       success: true,
       status: 200,
       message: "기사 상세 조회 성공했습니다.",
@@ -124,14 +105,14 @@ export default function Article({ item }) {
     });
 
     axios
-      .get("/api/list/articles")
+      .get(`/api/detail/articles/${item.articleId}`)
       .then((response) => {
         setResponse(response.data.data); // 목 데이터를 받습니다.
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [item.articleId]);
 
   const handleOpen = () => {
     setOpen(true);

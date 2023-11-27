@@ -20,11 +20,6 @@ const colors = {
   Teal: "#39cccc",
   Purple: "#b10dc9",
   Orange: "#ff851b",
-
-  Red: "red",
-  Blue: "blue",
-  Green: "green",
-  Yellow: "yellow",
 };
 
 export default colors;

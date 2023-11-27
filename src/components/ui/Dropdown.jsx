@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, MenuItem, Select } from "@mui/material";
 
 export default function Dropdown() {
-  const [selectedItem, setSelectedItem] = useState("제목/내용");
+  const [selectedItem, setSelectedItem] = useState("title,content");
 
   const handleDropdownChange = (event) => {
     window.localStorage.setItem("type", event.target.value);
@@ -20,7 +20,11 @@ export default function Dropdown() {
   return (
     <div>
       <FormControl>
-        <Select value={selectedItem} onChange={handleDropdownChange}>
+        <Select
+          value={selectedItem}
+          onChange={handleDropdownChange}
+          style={{ width: "8rem" }}
+        >
           <MenuItem value="title,content">제목/내용</MenuItem>
           <MenuItem value="title">제목</MenuItem>
           <MenuItem value="content">내용</MenuItem>
