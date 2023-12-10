@@ -61,6 +61,7 @@ const Paper = styled.div`
   background-color: white;
   outline: none;
   border-radius: 20px;
+  overflow: scroll;
 `;
 
 // const CloseBtn = styled(IconButton)`
