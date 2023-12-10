@@ -56,7 +56,7 @@ const ModalContainer = styled(Modal)`
 const Paper = styled.div`
   flex-direction: column;
   width: 600px;
-  height: 80vh;
+  height: 50vh;
   padding: 100px;
   background-color: white;
   outline: none;
@@ -85,8 +85,6 @@ export default function Article({ item }) {
   const [response, setResponse] = useState([]);
 
   useEffect(() => {
-    // 이 코드는 axios의 mock 기능을 활성화합니다.
-
     axios
       .get(`/api/detail/articles/${item.articleId}`)
       .then((response) => {
@@ -95,7 +93,7 @@ export default function Article({ item }) {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [item.articleId]);
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -128,7 +126,7 @@ export default function Article({ item }) {
       </Container>
       <ModalContainer open={open} onClose={handleClose}>
         <Paper>
-          <h1 dangerouslySetInnerHTML={{ __html: response.contentHeader }} />
+          <h1 dangerouslySetInnerHTML={{ __html: response.title }} />
           <div
             style={{
               display: "flex",

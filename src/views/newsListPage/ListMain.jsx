@@ -51,10 +51,9 @@ export default function ListMain() {
   useEffect(() => {
     axios
       .get(
-        `/api/list/articles?keyword=${resultKeyword}&type=${state.type}&size=${state.size}&sort=${state.sort}`
-        // localStorage.getItem("lastId") === null
-        //   ? `/api/list/articles?keyword=${resultKeyword}&type=${state.type}&size=${state.size}&sort=${state.sort}`
-        //   : `/api/list/articles?keyword=${resultKeyword}&type=${state.type}&size=${state.size}&sort=${state.sort}&lastId=${state.lastId}&pit=${state.pit}`
+        localStorage.getItem("lastId") === null
+          ? `/api/list/articles?keyword=${resultKeyword}&type=${state.type}&size=${state.size}&sort=${state.sort}`
+          : `/api/list/articles?keyword=${resultKeyword}&type=${state.type}&size=${state.size}&sort=${state.sort}&lastId=${state.lastId}&pit=${state.pit}`
       )
       .then((response) => {
         console.log(response.data);
