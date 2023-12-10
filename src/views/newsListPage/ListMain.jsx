@@ -46,15 +46,20 @@ export default function ListMain() {
   const [response, setResponse] = useState([]);
 
   const { state } = useLocation();
-  console.log(state);
+  const resultKeyword = JSON.parse(state.keyword).join(",");
+
   useEffect(() => {
     axios
       .get(
-        `/api/list/articles?keyword=${state.keyword}&type=${state.type}&size=${state.size}&sort=${state.sort}&lastId=${state.lastId}&pit=${state.pit}`
+        localStorage.getItem("lastId") === null
+          ? `/api/list/articles?keyword=${resultKeyword}&type=${state.type}&size=${state.size}&sort=${state.sort}`
+          : `/api/list/articles?keyword=${resultKeyword}&type=${state.type}&size=${state.size}&sort=${state.sort}&lastId=${state.lastId}&pit=${state.pit}`
       )
       .then((response) => {
-        console.log(response.data); // 여기서는 목 데이터를 받게 됩니다.
-        setResponse(response.data.data.articles); // 여기서는 목 데이터를 받게 됩니다.
+        console.log(response.data);
+        setResponse(response.data.data.articles);
+        localStorage.setItem("lastId", response.data.data.lastId);
+        localStorage.setItem("pit", response.data.data.pit);
       })
       .catch((error) => {
         console.error(error);
@@ -85,17 +90,6 @@ export default function ListMain() {
           <Tag key={index} text={text} onDelete={() => handleDelete(index)} />
         ))}
       </TagBox>
-      {/* <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "800px",
-          height: "1px",
-          margin: "50px 0px",
-          backgroundColor: "black",
-        }}
-      /> */}
       <ArticleBox>
         {response.map((item, value) => (
           <Article key={value} item={item} />

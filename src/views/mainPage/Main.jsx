@@ -52,8 +52,8 @@ export default function Main() {
     type: localStorage.getItem("type"),
     size: 10,
     sort: "id,desc",
-    lastId: "기존에 전달받은 아이디",
-    pit: "기존에 전달받은 pit값",
+    lastId: "",
+    pit: "",
   });
 
   const handleDelete = (index) => {
@@ -69,10 +69,11 @@ export default function Main() {
   useEffect(() => {
     console.log(requestData);
   }, [requestData]);
+
   return (
     <div>
       <SearchBox>
-        <Dropdown />
+        <Dropdown requestData={requestData} setRequestData={setRequestData} />
         <SearchBar
           inputText={inputText}
           setInputText={setInputText}
