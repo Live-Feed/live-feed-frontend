@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
 
 import { styled } from "styled-components";
 import { Modal } from "@mui/material";
@@ -8,7 +7,6 @@ import { Modal } from "@mui/material";
 // import CloseIcon from '@mui/icons-material/Close';
 
 // import ArticleThumbnail from "../../assets/images/ariticle_thumbnail.png";
-import ArticleImg from "../../assets/images/article_main_img.jpg";
 
 import colors from "../../styles/colors";
 
@@ -56,7 +54,7 @@ const ModalContainer = styled(Modal)`
 const Paper = styled.div`
   flex-direction: column;
   width: 600px;
-  height: 50vh;
+  height: 60vh;
   padding: 100px;
   background-color: white;
   outline: none;
@@ -83,21 +81,21 @@ const Contents = styled.div`
 export default function Article({ item }) {
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`/api/detail/articles/${item.articleId}`)
-      .then((response) => {
-        setResponse(response.data.data); // 목 데이터를 받습니다.
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
-    console.log("open");
+    if (!isLoading) {
+      axios
+        .get(`/api/detail/articles/${item.articleId}`)
+        .then((response) => {
+          setResponse(response.data.data); // 목 데이터를 받습니다.
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+    setIsLoading(true);
   };
 
   const handleClose = () => {
@@ -119,9 +117,8 @@ export default function Article({ item }) {
             style={{
               lineHeight: "1.5rem",
             }}
-          >
-            {item.content}
-          </div>
+            dangerouslySetInnerHTML={{ __html: item.content }}
+          />
         </Right>
       </Container>
       <ModalContainer open={open} onClose={handleClose}>

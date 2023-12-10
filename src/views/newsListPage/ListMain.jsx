@@ -2,14 +2,11 @@ import { styled } from "styled-components";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
 
 import Tag from "../../components/ui/Tag";
 import Article from "./Article";
 
 import colors from "../../styles/colors";
-
-import ArticleThumbnail from "../../assets/images/ariticle_thumbnail.png";
 
 const Container = styled.div`
   display: flex;
@@ -64,7 +61,7 @@ export default function ListMain() {
       .catch((error) => {
         console.error(error);
       });
-  }, [state]);
+  }, [state, resultKeyword]);
 
   useEffect(() => {
     // 로컬 스토리지에서 저장된 배열을 가져옵니다.

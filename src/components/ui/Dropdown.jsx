@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormControl, MenuItem, Select } from "@mui/material";
 
-export default function Dropdown(props) {
+export default function Dropdown({ requestData, setRequestData }) {
   const [selectedItem, setSelectedItem] = useState("articleTitle,bodyHtml");
 
   const handleDropdownChange = (event) => {
@@ -10,8 +10,8 @@ export default function Dropdown(props) {
   };
 
   useEffect(() => {
-    props.setRequestData({ ...props.requestData, type: selectedItem });
-  }, [selectedItem]);
+    setRequestData({ ...requestData, type: selectedItem });
+  }, [requestData, selectedItem]);
 
   return (
     <div>
