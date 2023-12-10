@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormControl, MenuItem, Select } from "@mui/material";
 
-export default function Dropdown() {
+export default function Dropdown(props) {
   const [selectedItem, setSelectedItem] = useState("title,content");
 
   const handleDropdownChange = (event) => {
@@ -10,12 +10,8 @@ export default function Dropdown() {
   };
 
   useEffect(() => {
-    // 로컬 스토리지에서 저장된 배열을 가져옵니다.
-    const storedSort = localStorage.getItem("type");
-    if (storedSort) {
-      setSelectedItem(storedSort);
-    }
-  }, []);
+    props.setRequestData({ ...props.requestData, type: selectedItem });
+  }, [selectedItem]);
 
   return (
     <div>
