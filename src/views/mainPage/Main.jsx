@@ -26,7 +26,7 @@ const TagBox = styled.div`
   grid-template-rows: repeat(4, 1fr);
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   height: 60px;
   width: 200px;
   position: absolute;
@@ -51,7 +51,7 @@ export default function Main() {
     keyword: JSON.parse(localStorage.getItem("textArray")),
     type: localStorage.getItem("type"),
     size: 10,
-    sort: "id,desc",
+    sort: "id-desc",
     lastId: "",
     pit: "",
   });
@@ -88,7 +88,10 @@ export default function Main() {
           <Tag key={index} text={text} onDelete={() => handleDelete(index)} />
         ))}
       </TagBox>
-      <Button onClick={(e) => navigate("/list", { state: requestData })}>
+      <Button
+        // disabled={requestData.textArray === null}
+        onClick={(e) => navigate("/list", { state: requestData })}
+      >
         결과보기
       </Button>
     </div>
