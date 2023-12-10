@@ -148,15 +148,10 @@ export default function Article({ item }) {
           >
             기사 원문보기
           </a>
-          <img
-            src={ArticleImg}
-            alt="article_img"
-            width="600px"
-            style={{
-              marginBottom: "20px",
-            }}
+          <Contents
+            dangerouslySetInnerHTML={{ __html: response.contentBody }}
           />
-          <Contents>{response.contentBody}</Contents>
+          {/* <Contents>{response.contentBody}</Contents> */}
         </Paper>
       </ModalContainer>
     </>

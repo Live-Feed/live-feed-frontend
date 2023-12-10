@@ -66,10 +66,6 @@ export default function Main() {
     setRequestData({ ...requestData, keyword: JSON.stringify(updatedArray) });
   };
 
-  useEffect(() => {
-    console.log(requestData);
-  }, [requestData]);
-
   return (
     <div>
       <SearchBox>
