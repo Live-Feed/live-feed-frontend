@@ -56,12 +56,12 @@ const ModalContainer = styled(Modal)`
 const Paper = styled.div`
   flex-direction: column;
   width: 600px;
-  height: calc(100vh-20rem);
+  height: 80vh;
   padding: 100px;
   background-color: white;
   outline: none;
   border-radius: 20px;
-  overflow: scroll;
+  overflow-y: scroll;
 `;
 
 // const CloseBtn = styled(IconButton)`
@@ -111,7 +111,7 @@ export default function Article({ item }) {
     <>
       <Container onClick={handleOpen}>
         <Left>
-          <Img src={item.photo} alt="article_thumbnatil" />
+          <Img src={item.photo} alt="article_thumbnail" />
           <div>{item.minutesAgo}</div>
         </Left>
         <Right>
@@ -128,7 +128,7 @@ export default function Article({ item }) {
       </Container>
       <ModalContainer open={open} onClose={handleClose}>
         <Paper>
-          <h1>{response.contentHeader}</h1>
+          <h1 dangerouslySetInnerHTML={{ __html: response.contentHeader }} />
           <div
             style={{
               display: "flex",
@@ -152,7 +152,6 @@ export default function Article({ item }) {
           <Contents
             dangerouslySetInnerHTML={{ __html: response.contentBody }}
           />
-          {/* <Contents>{response.contentBody}</Contents> */}
         </Paper>
       </ModalContainer>
     </>
