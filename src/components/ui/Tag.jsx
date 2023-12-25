@@ -3,8 +3,8 @@ import { Button, Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import colors from "../../styles/colors";
 
-function Tag({ text, onDelete }) {
-  const [isActive, setIsActive] = useState(false);
+function Tag({ text, onDelete, onDisable }) {
+  const [isActive, setIsActive] = useState(true);
 
   const toggleButton = () => {
     setIsActive(!isActive);
@@ -25,7 +25,7 @@ function Tag({ text, onDelete }) {
             : `${colors.disable}`,
         },
       }}
-      onClick={toggleButton}
+      // onClick={toggleButton}
     >
       <Box
         sx={{

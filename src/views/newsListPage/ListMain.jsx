@@ -39,13 +39,14 @@ const ArticleBox = styled.div`
 `;
 
 export default function ListMain() {
-  const [textArray, setTextArray] = useState([]);
+  const [keyword, setKeyword] = useState([]);
   const [response, setResponse] = useState([]);
 
   const { state } = useLocation();
   const resultKeyword = JSON.parse(state.keyword).join(",");
 
   useEffect(() => {
+    console.log("dd");
     axios
       .get(
         localStorage.getItem("lastId") === null
@@ -65,25 +66,25 @@ export default function ListMain() {
 
   useEffect(() => {
     // 로컬 스토리지에서 저장된 배열을 가져옵니다.
-    const storedTextArray = JSON.parse(localStorage.getItem("textArray"));
-    if (storedTextArray) {
-      setTextArray(storedTextArray);
+    const storedKeyword = JSON.parse(localStorage.getItem("keyword"));
+    if (storedKeyword) {
+      setKeyword(storedKeyword);
     }
   }, []);
 
   const handleDelete = (index) => {
     // 선택한 항목을 배열에서 제거합니다.
-    const updatedArray = textArray.filter((_, i) => i !== index);
-    setTextArray(updatedArray);
+    const updatedKeyword = keyword.filter((_, i) => i !== index);
+    setKeyword(updatedKeyword);
 
     // 로컬 스토리지에 배열을 업데이트된 배열로 다시 저장합니다.
-    localStorage.setItem("textArray", JSON.stringify(updatedArray));
+    localStorage.setItem("keyword", JSON.stringify(updatedKeyword));
   };
 
   return (
     <Container>
       <TagBox>
-        {textArray.map((text, index) => (
+        {keyword.map((text, index) => (
           <Tag key={index} text={text} onDelete={() => handleDelete(index)} />
         ))}
       </TagBox>

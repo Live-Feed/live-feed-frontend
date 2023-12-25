@@ -45,10 +45,10 @@ export default function Main() {
   const navigate = useNavigate();
 
   const [inputText, setInputText] = useState("");
-  const [textArray, setTextArray] = useState([]);
+  const [keyword, setKeyword] = useState([]);
 
   const [requestData, setRequestData] = useState({
-    keyword: JSON.parse(localStorage.getItem("textArray")),
+    keyword: JSON.parse(localStorage.getItem("keyword")),
     type: localStorage.getItem("type"),
     size: 10,
     sort: "id-desc",
@@ -58,12 +58,12 @@ export default function Main() {
 
   const handleDelete = (index) => {
     // 선택한 항목을 배열에서 제거합니다.
-    const updatedArray = textArray.filter((_, i) => i !== index);
-    setTextArray(updatedArray);
+    const updatedKeyword = keyword.filter((_, i) => i !== index);
+    setKeyword(updatedKeyword);
 
     // 로컬 스토리지에 배열을 업데이트된 배열로 다시 저장합니다.
-    localStorage.setItem("textArray", JSON.stringify(updatedArray));
-    setRequestData({ ...requestData, keyword: JSON.stringify(updatedArray) });
+    localStorage.setItem("keyword", JSON.stringify(updatedKeyword));
+    setRequestData({ ...requestData, keyword: JSON.stringify(updatedKeyword) });
   };
 
   return (
@@ -73,20 +73,29 @@ export default function Main() {
         <SearchBar
           inputText={inputText}
           setInputText={setInputText}
-          textArray={textArray}
-          setTextArray={setTextArray}
+          keyword={keyword}
+          setKeyword={setKeyword}
           requestData={requestData}
           setRequestData={setRequestData}
         />
       </SearchBox>
       <TagBox>
-        {textArray.map((text, index) => (
-          <Tag key={index} text={text} onDelete={() => handleDelete(index)} />
+        {keyword.map((text, index) => (
+          <Tag
+            key={index}
+            text={text}
+            onDelete={() => handleDelete(index)}
+            // onAble={}
+            onDisable={() => handleDelete(index)}
+          />
         ))}
       </TagBox>
       <Button
-        // disabled={requestData.textArray === null}
-        onClick={(e) => navigate("/list", { state: requestData })}
+        disabled={!!requestData.keyword}
+        onClick={(e) => {
+          // navigate("/list", { state: requestData });
+          console.log(requestData.keyword.length);
+        }}
       >
         결과보기
       </Button>
