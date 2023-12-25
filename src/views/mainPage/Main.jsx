@@ -93,8 +93,8 @@ export default function Main() {
       <Button
         // disabled={!!requestData.keyword}
         onClick={(e) => {
-          // navigate("/list", { state: requestData });
-          console.log(requestData.keyword.length);
+          navigate("/list", { state: requestData });
+          // console.log(requestData.keyword.length);
         }}
       >
         결과보기
