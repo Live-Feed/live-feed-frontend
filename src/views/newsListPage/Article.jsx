@@ -111,7 +111,9 @@ export default function Article({ item }) {
           <div>{item.minutesAgo}</div>
         </Left>
         <Right>
-          <NewsTitle>{item.title}</NewsTitle>
+          <NewsTitle>
+            dangerouslySetInnerHTML={{ __html: item.title }}
+          </NewsTitle>
           <Media>{item.pressCompany}</Media>
           <div
             style={{

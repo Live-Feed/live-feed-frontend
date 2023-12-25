@@ -102,7 +102,6 @@ export default function Main() {
           navigate("/list", {
             state: requestData,
           });
-          console.log(requestData);
         }}
       >
         결과보기
