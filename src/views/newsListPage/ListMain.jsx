@@ -43,18 +43,21 @@ export default function ListMain() {
   const [response, setResponse] = useState([]);
 
   const { state } = useLocation();
-  const resultKeyword = JSON.parse(state.keyword).join(",");
 
   useEffect(() => {
-    console.log("dd");
     axios
       .get(
         localStorage.getItem("lastId") === null
-          ? `/api/list/articles?keyword=${resultKeyword}&type=${state.type}&size=${state.size}&sort=${state.sort}`
-          : `/api/list/articles?keyword=${resultKeyword}&type=${state.type}&size=${state.size}&sort=${state.sort}&lastId=${state.lastId}&pit=${state.pit}`
+          ? `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
+              state.type
+            }&size=${state.size}&sort=${state.sort}`
+          : `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
+              state.type
+            }&size=${state.size}&sort=${state.sort}&lastId=${
+              state.lastId
+            }&pit=${state.pit}`
       )
       .then((response) => {
-        console.log(response.data);
         setResponse(response.data.data.articles);
         localStorage.setItem("lastId", response.data.data.lastId);
         localStorage.setItem("pit", response.data.data.pit);
@@ -62,7 +65,7 @@ export default function ListMain() {
       .catch((error) => {
         console.error(error);
       });
-  }, [state, resultKeyword]);
+  }, [state]);
 
   useEffect(() => {
     // 로컬 스토리지에서 저장된 배열을 가져옵니다.

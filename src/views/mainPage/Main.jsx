@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { styled } from "styled-components";
@@ -56,6 +56,12 @@ export default function Main() {
     pit: "",
   });
 
+  // useEffect(() => {
+  //   if (localStorage.getItem("keyword") !== null) {
+  //     setKeyword(localStorage.getItem("keyword"));
+  //   }
+  // }, []);
+
   const handleDelete = (index) => {
     // 선택한 항목을 배열에서 제거합니다.
     const updatedKeyword = keyword.filter((_, i) => i !== index);
@@ -63,7 +69,7 @@ export default function Main() {
 
     // 로컬 스토리지에 배열을 업데이트된 배열로 다시 저장합니다.
     localStorage.setItem("keyword", JSON.stringify(updatedKeyword));
-    setRequestData({ ...requestData, keyword: JSON.stringify(updatedKeyword) });
+    setRequestData({ ...requestData, keyword: updatedKeyword });
   };
 
   return (
@@ -93,8 +99,10 @@ export default function Main() {
       <Button
         // disabled={!!requestData.keyword}
         onClick={(e) => {
-          navigate("/list", { state: requestData });
-          // console.log(requestData.keyword.length);
+          navigate("/list", {
+            state: requestData,
+          });
+          console.log(requestData);
         }}
       >
         결과보기

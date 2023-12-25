@@ -30,7 +30,7 @@ function SearchBar(props) {
         // api에 보내줄 데이터도 수정합니다.
         props.setRequestData({
           ...props.requestData,
-          keyword: JSON.stringify(updatedKeyword),
+          keyword: updatedKeyword,
         });
 
         // 입력 필드를 초기화합니다.
