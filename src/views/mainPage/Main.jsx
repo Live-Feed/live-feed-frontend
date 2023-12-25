@@ -91,7 +91,7 @@ export default function Main() {
         ))}
       </TagBox>
       <Button
-        disabled={!!requestData.keyword}
+        // disabled={!!requestData.keyword}
         onClick={(e) => {
           // navigate("/list", { state: requestData });
           console.log(requestData.keyword.length);
