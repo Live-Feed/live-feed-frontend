@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
 // Axios 전역 설정
-axios.defaults.baseURL = "http://localhost:8084";
+axios.defaults.baseURL = "http://localhost:8081";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
