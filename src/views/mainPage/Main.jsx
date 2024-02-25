@@ -26,7 +26,7 @@ const TagBox = styled.div`
   grid-template-rows: repeat(4, 1fr);
 `;
 
-const Button = styled.button`
+const Button = styled.div`
   height: 60px;
   width: 200px;
   position: absolute;
@@ -38,6 +38,7 @@ const Button = styled.button`
   font-size: 20px;
   border-radius: 10px;
   background-color: ${colors.secondary};
+  box-shadow: 1px 1px 5px gray;
   cursor: pointer;
 `;
 
@@ -55,12 +56,6 @@ export default function Main() {
     lastId: "",
     pit: "",
   });
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("keyword") !== null) {
-  //     setKeyword(localStorage.getItem("keyword"));
-  //   }
-  // }, []);
 
   const handleDelete = (index) => {
     // 선택한 항목을 배열에서 제거합니다.

@@ -13,6 +13,9 @@ const typographyStyles = {
     fontSize: "20px",
     color: "red",
   },
+  subTitle: {
+    fontSize: "8px",
+  },
 };
 
 export default typographyStyles;

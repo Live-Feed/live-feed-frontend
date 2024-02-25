@@ -28,14 +28,14 @@ const ArticleBox = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* gap: 50px; */
+  gap: 10px;
   overflow: scroll;
-  height: calc(100vh - 20rem);
+  height: calc(100vh - 270px);
   width: 100%;
-  border: 2px solid ${colors.MediumGray};
-  border-radius: 20px;
-  background-color: white;
-  padding: 30px 20px;
+  /* border: 2px solid ${colors.MediumGray}; */
+  /* border-radius: 20px; */
+  /* background-color: white; */
+  padding: 10px 10px;
 `;
 
 export default function ListMain() {

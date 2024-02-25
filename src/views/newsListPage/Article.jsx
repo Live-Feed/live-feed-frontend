@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 import { styled } from "styled-components";
-import { Modal } from "@mui/material";
+import { Modal, Typography } from "@mui/material";
 // import IconButton from '@mui/material/IconButton';
 // import CloseIcon from '@mui/icons-material/Close';
 
@@ -11,14 +11,15 @@ import { Modal } from "@mui/material";
 import colors from "../../styles/colors";
 
 const Container = styled.div`
-  width: 735px;
+  width: 855px;
   height: 280px;
   padding: 20px;
   display: flex;
   gap: 15px;
   background-color: white;
   border-bottom: 2px solid ${colors.LightGray};
-  /* border-radius: 20px; */
+  border-radius: 20px;
+  box-shadow: 1px 1px 5px gray;
   cursor: pointer;
 `;
 
@@ -53,8 +54,8 @@ const ModalContainer = styled(Modal)`
 
 const Paper = styled.div`
   flex-direction: column;
-  width: 600px;
-  height: 60vh;
+  width: 700px;
+  height: 75vh;
   padding: 100px;
   background-color: white;
   outline: none;
@@ -70,11 +71,11 @@ const Paper = styled.div`
 // `;
 
 const Img = styled.img`
-  width: 200px;
+  width: 150px;
 `;
 
 const Contents = styled.div`
-  width: 600px;
+  width: 700px;
   line-height: 1.5rem;
 `;
 
@@ -107,8 +108,8 @@ export default function Article({ item }) {
     <>
       <Container onClick={handleOpen}>
         <Left>
-          <Img src={item.photo} alt="article_thumbnail" />
-          <div>{item.minutesAgo}</div>
+          <Img src={item.photo} alt="article_thumbnail" width="155px" />
+          <Typography fontSize={10}>{item.minutesAgo}</Typography>
         </Left>
         <Right>
           <NewsTitle dangerouslySetInnerHTML={{ __html: item.title }} />
