@@ -5,7 +5,6 @@ import colors from "../../styles/colors";
 
 function Tag({ text, onDelete, onDisable }) {
   const [isActive, setIsActive] = useState(true);
-
   const toggleButton = () => {
     setIsActive(!isActive);
   };
@@ -19,6 +18,7 @@ function Tag({ text, onDelete, onDisable }) {
         backgroundColor: isActive ? `${colors.secondary}` : `${colors.disable}`,
         color: isActive ? "black" : "white",
         width: "fit-content",
+        textTransform: "none",
         "&:hover": {
           backgroundColor: isActive
             ? `${colors.secondary}`

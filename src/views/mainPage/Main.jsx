@@ -91,7 +91,6 @@ export default function Main() {
             key={index}
             text={text}
             onDelete={() => handleDelete(index)}
-            // onAble={}
             onDisable={() => handleDelete(index)}
           />
         ))}
