@@ -10,7 +10,7 @@ name: LiveFeedFront Module CI/CD
 on:
   push:
     branches:
-      - 'LF-51/**'
+      - 'master'
 
 jobs:
   build:
@@ -33,7 +33,7 @@ jobs:
       
       - name: .env setting
         run: |
-          echo "REACT_APP_SERVER_IP=${{ secrets.REACT_APP_SERVER_IP }}" >> .env.production
+          echo "REACT_APP_SERVER_IP=${{ secrets.REACT_APP_SERVER_IP }}" >> .env.production.local
 
       - name: get-npm-version
         id: package-version
@@ -66,7 +66,3 @@ jobs:
           platforms: |
             linux/amd64
             linux/arm64
-
-      
-      
-      
