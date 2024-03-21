@@ -33,7 +33,6 @@ function SearchBar(props) {
       } else {
         // 입력한 텍스트를 배열에 추가합니다.
         const updatedKeyword = [...props.keyword, props.inputText];
-        console.log(updatedKeyword);
         props.setKeyword(updatedKeyword);
 
         // 로컬 스토리지에 배열을 저장합니다.

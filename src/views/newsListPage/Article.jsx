@@ -101,7 +101,6 @@ export default function Article({ item }) {
 
   const handleClose = () => {
     setOpen(false);
-    console.log("close");
   };
 
   return (

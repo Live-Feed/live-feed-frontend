@@ -92,9 +92,11 @@ export default function ListMain() {
         ))}
       </TagBox>
       <ArticleBox>
-        {response.map((item, value) => (
-          <Article key={value} item={item} />
-        ))}
+        {response.length ? (
+          response.map((item, value) => <Article key={value} item={item} />)
+        ) : (
+          <div>기사가 존재하지 않습니다.</div>
+        )}
       </ArticleBox>
     </Container>
   );

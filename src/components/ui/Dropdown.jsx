@@ -10,7 +10,6 @@ export default function Dropdown({ requestData, setRequestData }) {
   };
 
   useEffect(() => {
-    console.log("1");
     // if (localStorage.getItem("type") !== null) {
     //   setRequestData({ ...requestData, type: localStorage.getItem("type") });
     // }

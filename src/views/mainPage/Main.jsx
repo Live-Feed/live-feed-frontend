@@ -26,7 +26,7 @@ const TagBox = styled.div`
   grid-template-rows: repeat(4, 1fr);
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   height: 60px;
   width: 200px;
   position: absolute;
@@ -37,6 +37,7 @@ const Button = styled.div`
   justify-content: center;
   font-size: 20px;
   border-radius: 10px;
+  border: none;
   background-color: ${colors.secondary};
   box-shadow: 1px 1px 5px gray;
   cursor: pointer;
@@ -53,8 +54,10 @@ export default function Main() {
     type: localStorage.getItem("type"),
     size: 10,
     sort: "id-desc",
-    lastId: "",
-    pit: "",
+    lastId: localStorage.getItem("lastId")
+      ? localStorage.getItem("lastId")
+      : "",
+    pit: localStorage.getItem("pit") ? localStorage.getItem("pit") : "",
   });
 
   const handleDelete = (index) => {
@@ -91,7 +94,7 @@ export default function Main() {
         ))}
       </TagBox>
       <Button
-        // disabled={!!requestData.keyword}
+        // disabled={!JSON.parse(requestData.keyword.length)}
         onClick={(e) => {
           navigate("/list", {
             state: requestData,
