@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router";
 import axios from "axios";
 
@@ -39,33 +39,67 @@ const ArticleBox = styled.div`
 `;
 
 export default function ListMain() {
-  const [keyword, setKeyword] = useState([]);
-  const [response, setResponse] = useState([]);
-
   const { state } = useLocation();
 
+  const [keyword, setKeyword] = useState([]);
+  const [result, setResult] = useState([]);
+  const [page, setPage] = useState(1);
+  const [_isLast, setIsLast] = useState(false);
+  const [_pit, setPit] = useState("");
+  const [_lastId, setLastId] = useState(0);
+
+  const preventRef = useRef(true); //옵저버 중복 실행 방지
+
   useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersect, {
+      rootMargin: "10px",
+      threshold: 0,
+    });
+    observer.observe(document.querySelector(".sentinel"));
+    return () => observer.disconnect();
+  }, [page]);
+
+  const handleIntersect = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && preventRef.current && !_isLast) {
+        preventRef.current = false; //옵저버 중복 실행 방지
+        getData();
+      }
+    });
+  };
+
+  const getData = () => {
     axios
       .get(
-        localStorage.getItem("lastId") === null
+        !_pit && !_lastId
           ? `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
               state.type
             }&size=${state.size}&sort=${state.sort}`
           : `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
               state.type
-            }&size=${state.size}&sort=${state.sort}&lastId=${
-              state.lastId
-            }&pit=${state.pit}`
+            }&size=${state.size}&sort=${
+              state.sort
+            }&lastId=${_lastId}&pit=${_pit}`
       )
       .then((response) => {
-        setResponse(response.data.data.articles);
+        // preventRef.current = true;
+        preventRef.current = true; //옵저버 중복 실행 방지
+        console.log("loading");
+        setResult([...result, ...response.data.data.articles]);
+        setIsLast(response.data.data.isLast);
+        setLastId(response.data.data.lastId);
+        setPit(response.data.data.pit);
+
+        localStorage.setItem("isLast", response.data.data.isLast);
         localStorage.setItem("lastId", response.data.data.lastId);
         localStorage.setItem("pit", response.data.data.pit);
+        setPage((prevPage) => prevPage + 1);
       })
       .catch((error) => {
         console.error(error);
+        window.history.back();
       });
-  }, [state]);
+  };
 
   useEffect(() => {
     // 로컬 스토리지에서 저장된 배열을 가져옵니다.
@@ -92,11 +126,12 @@ export default function ListMain() {
         ))}
       </TagBox>
       <ArticleBox>
-        {response.length ? (
-          response.map((item, value) => <Article key={value} item={item} />)
+        {result.length ? (
+          result.map((item, value) => <Article key={value} item={item} />)
         ) : (
           <div>기사가 존재하지 않습니다.</div>
         )}
+        {<div className="sentinel"></div>}
       </ArticleBox>
     </Container>
   );

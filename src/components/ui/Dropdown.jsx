@@ -24,8 +24,8 @@ export default function Dropdown({ requestData, setRequestData }) {
           onChange={handleDropdownChange}
           style={{ width: "8rem", backgroundColor: "white" }}
         >
-          <MenuItem value="articleTitle,bodyHtml">제목/내용</MenuItem>
-          <MenuItem value="articleTitle">제목</MenuItem>
+          <MenuItem value="headerHtml,bodyHtml">제목/내용</MenuItem>
+          <MenuItem value="headerHtml">제목</MenuItem>
           <MenuItem value="bodyHtml">내용</MenuItem>
         </Select>
       </FormControl>

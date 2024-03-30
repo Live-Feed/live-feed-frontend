@@ -54,6 +54,7 @@ export default function Main() {
     type: localStorage.getItem("type"),
     size: 10,
     sort: "id-desc",
+    isLast: false,
     lastId: localStorage.getItem("lastId")
       ? localStorage.getItem("lastId")
       : "",

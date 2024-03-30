@@ -6,7 +6,7 @@ import GlobalStyle from "./styles/GlobalStyle"; // 글로벌 스타일 파일을
 
 function App() {
   if (window.localStorage.getItem("type") === null) {
-    window.localStorage.setItem("type", "articleTitle,bodyHtml");
+    window.localStorage.setItem("type", "headerHtml,bodyHtml");
   }
   return (
     <div>
