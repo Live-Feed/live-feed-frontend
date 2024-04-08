@@ -8,6 +8,9 @@ import Article from "./Article";
 
 import colors from "../../styles/colors";
 
+import { Box } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,6 +48,7 @@ export default function ListMain() {
   const [result, setResult] = useState([]);
   const [page, setPage] = useState(1);
   const [_isLast, setIsLast] = useState(false);
+  const [_isLoading, setIsLoading] = useState(false);
   const [_pit, setPit] = useState("");
   const [_lastId, setLastId] = useState(0);
 
@@ -57,6 +61,7 @@ export default function ListMain() {
     });
     observer.observe(document.querySelector(".sentinel"));
     return () => observer.disconnect();
+    // eslint-disable-next-line
   }, [page]);
 
   const handleIntersect = (entries) => {
@@ -69,6 +74,7 @@ export default function ListMain() {
   };
 
   const getData = () => {
+    setIsLoading(true);
     axios
       .get(
         !_pit && !_lastId
@@ -84,7 +90,6 @@ export default function ListMain() {
       .then((response) => {
         // preventRef.current = true;
         preventRef.current = true; //옵저버 중복 실행 방지
-        console.log("loading");
         setResult([...result, ...response.data.data.articles]);
         setIsLast(response.data.data.isLast);
         setLastId(response.data.data.lastId);
@@ -94,6 +99,7 @@ export default function ListMain() {
         localStorage.setItem("lastId", response.data.data.lastId);
         localStorage.setItem("pit", response.data.data.pit);
         setPage((prevPage) => prevPage + 1);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -118,19 +124,41 @@ export default function ListMain() {
     localStorage.setItem("keyword", JSON.stringify(updatedKeyword));
   };
 
+  const handleToggle = (index) => {
+    // 선택한 항목을 배열에서 제거합니다.
+    const updatedKeyword = keyword.filter((_, i) => i !== index);
+    // setKeyword(updatedKeyword);
+
+    // 로컬 스토리지에 배열을 업데이트된 배열로 다시 저장합니다.
+    localStorage.setItem("keyword", JSON.stringify(updatedKeyword));
+    // setRequestData({ ...requestData, keyword: updatedKeyword });
+  };
+
   return (
     <Container>
       <TagBox>
         {keyword.map((text, index) => (
-          <Tag key={index} text={text} onDelete={() => handleDelete(index)} />
+          <Tag
+            key={index}
+            text={text}
+            onDelete={() => handleDelete(index)}
+            onToggle={() => handleToggle(index)}
+            isList={true}
+            activeTags={JSON.parse(localStorage.getItem("activeTags"))}
+          />
         ))}
       </TagBox>
       <ArticleBox>
-        {result.length ? (
+        {_isLoading ? (
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        ) : result.length ? (
           result.map((item, value) => <Article key={value} item={item} />)
         ) : (
           <div>기사가 존재하지 않습니다.</div>
         )}
+
         {<div className="sentinel"></div>}
       </ArticleBox>
     </Container>

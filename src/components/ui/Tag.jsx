@@ -3,10 +3,12 @@ import { Button, Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import colors from "../../styles/colors";
 
-function Tag({ text, onDelete, onDisable }) {
-  const [isActive, setIsActive] = useState(true);
+function Tag({ text, onDelete, onToggle, isList = false, activeTags }) {
+  const [isActive, setIsActive] = useState(activeTags.includes(text));
+
   const toggleButton = () => {
     setIsActive(!isActive);
+    onToggle(!isActive, text);
   };
 
   return (
@@ -25,7 +27,6 @@ function Tag({ text, onDelete, onDisable }) {
             : `${colors.disable}`,
         },
       }}
-      // onClick={toggleButton}
     >
       <Box
         sx={{
@@ -35,11 +36,15 @@ function Tag({ text, onDelete, onDisable }) {
           gap: "0.5rem",
         }}
       >
-        <span>{text}</span>
-        <IconButton sx={{ padding: "0px" }} onClick={onDelete}>
+        <span onClick={toggleButton}>{text}</span>
+      </Box>
+      {isList ? (
+        <></>
+      ) : (
+        <IconButton sx={{ padding: "0px" }} onClick={() => onDelete(text)}>
           <CloseIcon />
         </IconButton>
-      </Box>
+      )}
     </Button>
   );
 }

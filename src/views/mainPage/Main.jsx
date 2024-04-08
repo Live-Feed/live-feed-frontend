@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { styled } from "styled-components";
@@ -48,6 +48,7 @@ export default function Main() {
 
   const [inputText, setInputText] = useState("");
   const [keyword, setKeyword] = useState([]);
+  const [activeTags, setActiveTags] = useState([]);
 
   const [requestData, setRequestData] = useState({
     keyword: JSON.parse(localStorage.getItem("keyword")),
@@ -61,14 +62,37 @@ export default function Main() {
     pit: localStorage.getItem("pit") ? localStorage.getItem("pit") : "",
   });
 
-  const handleDelete = (index) => {
+  const handleDelete = (index, text) => {
     // 선택한 항목을 배열에서 제거합니다.
-    const updatedKeyword = keyword.filter((_, i) => i !== index);
+    let updatedKeyword = keyword.filter((item) => item !== text);
     setKeyword(updatedKeyword);
+
+    let updatedTags = activeTags.filter((item) => item !== text);
+    setActiveTags(updatedTags);
 
     // 로컬 스토리지에 배열을 업데이트된 배열로 다시 저장합니다.
     localStorage.setItem("keyword", JSON.stringify(updatedKeyword));
-    setRequestData({ ...requestData, keyword: updatedKeyword });
+    localStorage.setItem("activeTags", JSON.stringify(updatedTags));
+    setRequestData({ ...requestData, keyword: updatedTags });
+  };
+
+  const handleToggle = (index, active, text) => {
+    if (active === true) {
+      // 입력한 텍스트를 배열에 추가합니다.
+      const updatedKeyword = [...activeTags, text];
+      setActiveTags(updatedKeyword);
+
+      // 로컬 스토리지에 배열을 저장합니다.
+      localStorage.setItem("activeTags", JSON.stringify(updatedKeyword));
+    } else {
+      // 선택한 항목을 배열에서 제거합니다.
+      const updatedTags = activeTags.filter((item) => item !== text);
+      setActiveTags(updatedTags);
+
+      // 로컬 스토리지에 배열을 업데이트된 배열로 다시 저장합니다.
+      localStorage.setItem("activeTags", JSON.stringify(updatedTags));
+      setRequestData({ ...requestData, keyword: updatedTags });
+    }
   };
 
   return (
@@ -80,6 +104,8 @@ export default function Main() {
           setInputText={setInputText}
           keyword={keyword}
           setKeyword={setKeyword}
+          activeTags={activeTags}
+          setActiveTags={setActiveTags}
           requestData={requestData}
           setRequestData={setRequestData}
         />
@@ -89,13 +115,16 @@ export default function Main() {
           <Tag
             key={index}
             text={text}
-            onDelete={() => handleDelete(index)}
-            onDisable={() => handleDelete(index)}
+            onDelete={() => handleDelete(index, text)}
+            onToggle={(active, text) => handleToggle(index, active, text)}
+            activeTags={JSON.parse(localStorage.getItem("activeTags"))}
           />
         ))}
       </TagBox>
       <Button
-        // disabled={!JSON.parse(requestData.keyword.length)}
+        disabled={
+          requestData.keyword ? !JSON.parse(requestData.keyword.length) : true
+        }
         onClick={(e) => {
           navigate("/list", {
             state: requestData,
