@@ -42,7 +42,7 @@ const ArticleBox = styled.div`
   flex-direction: column;
   gap: 10px;
   overflow: scroll;
-  height: calc(100vh - 310px);
+  height: calc(100vh - 320px);
   width: 100%;
   /* border: 2px solid ${colors.MediumGray}; */
   /* border-radius: 20px; */
@@ -85,7 +85,7 @@ export default function ListMain() {
   };
 
   const getData = () => {
-    setIsLoading(true);
+    if (page === 1) setIsLoading(true);
     axios
       .get(
         !_pit && !_lastId
@@ -192,6 +192,7 @@ export default function ListMain() {
           display: "flex",
           justifyContent: "flex-end",
           marginRight: "10px",
+          marginBottom: "10px",
         }}
       >
         <FormControl>
