@@ -8,6 +8,7 @@ import Article from "./Article";
 
 import colors from "../../styles/colors";
 
+import { FormControl, MenuItem, Select, Snackbar } from "@mui/material";
 import { Box } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -51,6 +52,7 @@ export default function ListMain() {
   const [_isLoading, setIsLoading] = useState(false);
   const [_pit, setPit] = useState("");
   const [_lastId, setLastId] = useState(0);
+  const [selectedItem, setSelectedItem] = useState("latest");
 
   const preventRef = useRef(true); //옵저버 중복 실행 방지
 
@@ -134,6 +136,11 @@ export default function ListMain() {
     // setRequestData({ ...requestData, keyword: updatedKeyword });
   };
 
+  const handleDropdownChange = (event) => {
+    // window.localStorage.setItem("type", event.target.value);
+    setSelectedItem(event.target.value);
+  };
+
   return (
     <Container>
       <TagBox>
@@ -148,6 +155,26 @@ export default function ListMain() {
           />
         ))}
       </TagBox>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "flex-end",
+          marginRight: "10px",
+        }}
+      >
+        <FormControl>
+          <Select
+            value={selectedItem}
+            onChange={handleDropdownChange}
+            style={{ width: "8rem", backgroundColor: "white" }}
+          >
+            <MenuItem value="latest">최신순</MenuItem>
+            <MenuItem value="relative">관련된순</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
       <ArticleBox>
         {_isLoading ? (
           <Box sx={{ display: "flex" }}>
