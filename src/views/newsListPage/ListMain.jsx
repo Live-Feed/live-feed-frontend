@@ -8,8 +8,16 @@ import Article from "./Article";
 
 import colors from "../../styles/colors";
 
-import { FormControl, MenuItem, Select, Snackbar } from "@mui/material";
-import { Box } from "@mui/material";
+import {
+  FormControl,
+  MenuItem,
+  Select,
+  Snackbar,
+  Button,
+  Box,
+} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const Container = styled.div`
@@ -34,7 +42,7 @@ const ArticleBox = styled.div`
   flex-direction: column;
   gap: 10px;
   overflow: scroll;
-  height: calc(100vh - 270px);
+  height: calc(100vh - 310px);
   width: 100%;
   /* border: 2px solid ${colors.MediumGray}; */
   /* border-radius: 20px; */
@@ -50,6 +58,7 @@ export default function ListMain() {
   const [page, setPage] = useState(1);
   const [_isLast, setIsLast] = useState(false);
   const [_isLoading, setIsLoading] = useState(false);
+  const [_isNew, setIsNew] = useState(true);
   const [_pit, setPit] = useState("");
   const [_lastId, setLastId] = useState(0);
   const [selectedItem, setSelectedItem] = useState("latest");
@@ -141,6 +150,28 @@ export default function ListMain() {
     setSelectedItem(event.target.value);
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setIsNew(false);
+  };
+
+  const action = (
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      {/* <Box onclick={window.scrollTo(0, 0)}>확인하기</Box> */}
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Box>
+  );
+
   return (
     <Container>
       <TagBox>
@@ -188,6 +219,12 @@ export default function ListMain() {
 
         {<div className="sentinel"></div>}
       </ArticleBox>
+      <Snackbar
+        open={_isNew}
+        onClose={handleClose}
+        message="새로운 기사가 등록되었습니다."
+        action={action}
+      />
     </Container>
   );
 }
