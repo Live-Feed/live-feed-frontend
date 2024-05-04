@@ -5,6 +5,7 @@ import colors from "../../styles/colors";
 
 function Tag({ text, onDelete, onDisable }) {
   const [isActive, setIsActive] = useState(true);
+  // eslint-disable-next-line
   const toggleButton = () => {
     setIsActive(!isActive);
   };
