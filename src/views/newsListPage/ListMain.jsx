@@ -13,7 +13,7 @@ import {
   MenuItem,
   Select,
   Snackbar,
-  Button,
+  // Button,
   Box,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -183,29 +183,35 @@ export default function ListMain() {
             onToggle={() => handleToggle(index)}
             isList={true}
             activeTags={JSON.parse(localStorage.getItem("activeTags"))}
+            status={false}
           />
         ))}
       </TagBox>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end",
-          marginRight: "10px",
-          marginBottom: "10px",
-        }}
-      >
-        <FormControl>
-          <Select
-            value={selectedItem}
-            onChange={handleDropdownChange}
-            style={{ width: "8rem", backgroundColor: "white" }}
-          >
-            <MenuItem value="latest">최신순</MenuItem>
-            <MenuItem value="relative">관련된순</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+
+      {_isLoading ? (
+        <></>
+      ) : (
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "flex-end",
+            marginRight: "10px",
+            marginBottom: "10px",
+          }}
+        >
+          <FormControl>
+            <Select
+              value={selectedItem}
+              onChange={handleDropdownChange}
+              style={{ width: "8rem", backgroundColor: "white" }}
+            >
+              <MenuItem value="latest">최신순</MenuItem>
+              <MenuItem value="relative">관련된순</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      )}
 
       <ArticleBox>
         {_isLoading ? (
