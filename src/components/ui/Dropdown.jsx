@@ -14,6 +14,7 @@ export default function Dropdown({ requestData, setRequestData }) {
     //   setRequestData({ ...requestData, type: localStorage.getItem("type") });
     // }
     setRequestData({ ...requestData, type: selectedItem });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedItem]);
 
   return (
@@ -24,8 +25,8 @@ export default function Dropdown({ requestData, setRequestData }) {
           onChange={handleDropdownChange}
           style={{ width: "8rem", backgroundColor: "white" }}
         >
-          <MenuItem value="headerHtml,bodyHtml">제목/내용</MenuItem>
-          <MenuItem value="headerHtml">제목</MenuItem>
+          <MenuItem value="articleTitle,bodyHtml">제목/내용</MenuItem>
+          <MenuItem value="articleTitle">제목</MenuItem>
           <MenuItem value="bodyHtml">내용</MenuItem>
         </Select>
       </FormControl>
