@@ -8,6 +8,7 @@ import SearchBar from "../../components/ui/SearchBar";
 import Tag from "../../components/ui/Tag";
 
 import colors from "../../styles/colors";
+import Rank from "../../components/ui/Rank";
 
 const SearchBox = styled.div`
   display: flex;
@@ -133,6 +134,7 @@ export default function Main() {
       >
         결과보기
       </Button>
+      <Rank />
     </div>
   );
 }
