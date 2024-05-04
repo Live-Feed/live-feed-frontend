@@ -38,6 +38,12 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
+
+      - name: install npm dependencies
+        run: npm install
+
+      - name: react build
+        run: npm run build
       
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
