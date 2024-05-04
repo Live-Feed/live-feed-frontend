@@ -27,27 +27,29 @@ const Container = styled.div`
 `;
 
 const TagBox = styled.div`
-  display: grid;
+  display: flex;
+  flex-wrap: wrap; /* 2줄로 제한 */
+  justify-content: center; /* 가운데 정렬 */
   gap: 15px; /* 열 간의 간격 */
   max-width: 800px; /* 최대 너비 */
   margin: 0 auto; /* 가운데 정렬을 위한 마진 */
-  margin-bottom: 50px;
-  grid-template-columns: repeat(5, auto);
-  grid-template-rows: repeat(2, 1fr);
+  margin-bottom: 20px;
 `;
 
 const ArticleBox = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 10px;
-  overflow: scroll;
-  height: calc(100vh - 320px);
+  gap: 12px;
+  /* overflow: scroll; */
+  /* height: 100%; */
+  flex: 1;
   width: 100%;
   /* border: 2px solid ${colors.MediumGray}; */
   /* border-radius: 20px; */
   /* background-color: white; */
   padding: 10px 10px;
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 표시 */
 `;
 
 export default function ListMain() {
@@ -61,8 +63,10 @@ export default function ListMain() {
   const [_isNew, setIsNew] = useState(true);
   const [_pit, setPit] = useState("");
   const [_lastId, setLastId] = useState(0);
-  const [selectedItem, setSelectedItem] = useState("latest");
-
+  const [_lastScore, setLastScore] = useState(0);
+  const [_selectedItem, setSelectedItem] = useState(
+    localStorage.getItem("related") ? localStorage.getItem("related") : false
+  ); // false : 관련된순, true : 시간순
   const preventRef = useRef(true); //옵저버 중복 실행 방지
 
   useEffect(() => {
@@ -84,24 +88,32 @@ export default function ListMain() {
     });
   };
 
-  const getData = () => {
+  const getData = (reLoading = false) => {
     if (page === 1) setIsLoading(true);
     axios
       .get(
         !_pit && !_lastId
           ? `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
               state.type
-            }&size=${state.size}&sort=${state.sort}`
+            }&size=${state.size}&related=${_selectedItem}`
+          : reLoading
+          ? `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
+              state.type
+            }&size=${state.size}&related=${_selectedItem}`
           : `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
               state.type
             }&size=${state.size}&sort=${
               state.sort
-            }&lastId=${_lastId}&pit=${_pit}`
+            }&lastId=${_lastId}&pit=${_pit}&lastScore=${_lastScore}&related=${localStorage.getItem(
+              "related"
+            )}`
       )
       .then((response) => {
         // preventRef.current = true;
         preventRef.current = true; //옵저버 중복 실행 방지
-        setResult([...result, ...response.data.data.articles]);
+        if (reLoading) setResult(response.data.data.articles);
+        else if (!reLoading)
+          setResult([...result, ...response.data.data.articles]);
         setIsLast(response.data.data.isLast);
         setLastId(response.data.data.lastId);
         setPit(response.data.data.pit);
@@ -148,6 +160,8 @@ export default function ListMain() {
   const handleDropdownChange = (event) => {
     // window.localStorage.setItem("type", event.target.value);
     setSelectedItem(event.target.value);
+    localStorage.setItem("related", event.target.value);
+    getData(true);
   };
 
   const handleClose = (event, reason) => {
@@ -202,12 +216,12 @@ export default function ListMain() {
         >
           <FormControl>
             <Select
-              value={selectedItem}
+              value={_selectedItem}
               onChange={handleDropdownChange}
               style={{ width: "8rem", backgroundColor: "white" }}
             >
-              <MenuItem value="latest">최신순</MenuItem>
-              <MenuItem value="relative">관련된순</MenuItem>
+              <MenuItem value="false">최신순</MenuItem>
+              <MenuItem value="true">관련된순</MenuItem>
             </Select>
           </FormControl>
         </Box>
