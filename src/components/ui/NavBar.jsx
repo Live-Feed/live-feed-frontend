@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import colors from "../../styles/colors";
-import { ReactComponent as LOGO } from "../../assets/images/LOGO.svg";
+// import { ReactComponent as LOGO } from "../../assets/images/LOGO.svg";
 
 const Nav = styled.nav`
   background-color: ${colors.primary};

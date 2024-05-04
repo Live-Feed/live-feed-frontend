@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { styled } from "styled-components";
 
 const RankBox = styled.div`
