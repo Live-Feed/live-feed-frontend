@@ -58,6 +58,9 @@ jobs:
           username: ${{ env.USERNAME }}
           password: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
 
+      - name: List build directory
+        run: ls -l build
+
       - name: Image build and push
         env:
           APP_VERSION: ${{ steps.package-version.outputs.current-version}}
