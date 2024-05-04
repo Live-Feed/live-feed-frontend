@@ -3,12 +3,21 @@ import { Button, Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import colors from "../../styles/colors";
 
-function Tag({ text, onDelete, onToggle, isList = false, activeTags }) {
+function Tag({
+  text,
+  onDelete,
+  onToggle,
+  isList = false,
+  activeTags,
+  status = true,
+}) {
   const [isActive, setIsActive] = useState(activeTags.includes(text));
 
-  const toggleButton = () => {
-    setIsActive(!isActive);
-    onToggle(!isActive, text);
+  const toggleButton = (status) => {
+    if (status) {
+      setIsActive(!isActive);
+      onToggle(!isActive, text);
+    }
   };
 
   return (
@@ -36,7 +45,7 @@ function Tag({ text, onDelete, onToggle, isList = false, activeTags }) {
           gap: "0.5rem",
         }}
       >
-        <span onClick={toggleButton}>{text}</span>
+        <span onClick={() => toggleButton(status)}>{text}</span>
       </Box>
       {isList ? (
         <></>
