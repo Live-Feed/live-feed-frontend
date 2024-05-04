@@ -66,11 +66,10 @@ jobs:
           APP_VERSION: ${{ steps.package-version.outputs.current-version}}
         uses: docker/build-push-action@v4
         with:
+          context: .
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.APP_VERSION }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          cache-from: type=gha # 여기서 gha 는 Guthub Actions 용 캐시를 의미합니다.
-          cache-to: type=gha,mode=max
           platforms: |
             linux/arm64
