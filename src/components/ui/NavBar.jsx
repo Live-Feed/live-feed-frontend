@@ -12,7 +12,8 @@ const Nav = styled.nav`
   width: 100%;
   height: 60px;
   z-index: 100; /* 다른 요소 위에 나타나도록 설정 */
-  box-shadow: 0px 0px 10px 3px gray;
+  /* box-shadow: 0px 0px 10px 3px gray; */
+  border-bottom: 2px solid #d6d6d6;
 `;
 
 const Container = styled.div`
@@ -38,7 +39,7 @@ export default function NavBar() {
     <Nav>
       <Container>
         <LogoTitle onClick={() => navigate("/")}>
-          <LOGO width={"30px"} height={"40px"} fill={colors.secondary} />
+          {/* <LOGO width={"30px"} height={"40px"} fill={colors.secondary} /> */}
           <Title>Live Feed</Title>
         </LogoTitle>
       </Container>
