@@ -17,9 +17,9 @@ const Container = styled.div`
   display: flex;
   gap: 15px;
   background-color: white;
-  border-bottom: 2px solid ${colors.LightGray};
-  border-radius: 20px;
-  box-shadow: 1px 1px 5px gray;
+  border-bottom: 1px solid ${colors.LightGray};
+  border-radius: 8px;
+  box-shadow: 1px 1px 3px gray;
   cursor: pointer;
 `;
 
