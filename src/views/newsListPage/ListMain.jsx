@@ -116,6 +116,7 @@ export default function ListMain() {
           setResult([...result, ...response.data.data.articles]);
         setIsLast(response.data.data.isLast);
         setLastId(response.data.data.lastId);
+        setLastScore(response.data.data.lastScore);
         setPit(response.data.data.pit);
 
         localStorage.setItem("isLast", response.data.data.isLast);
