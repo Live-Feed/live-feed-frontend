@@ -8,7 +8,7 @@ function Tag({
   onDelete,
   onToggle,
   isList = false,
-  activeTags,
+  activeTags = [],
   status = true,
 }) {
   const [isActive, setIsActive] = useState(activeTags.includes(text));
