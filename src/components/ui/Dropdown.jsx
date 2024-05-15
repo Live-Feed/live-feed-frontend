@@ -16,7 +16,6 @@ export default function Dropdown({ requestData, setRequestData }) {
     setRequestData({ ...requestData, type: selectedItem });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedItem]);
-
   return (
     <div>
       <FormControl>
