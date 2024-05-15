@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { styled } from "styled-components";
@@ -44,6 +44,8 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const sseUrl = process.env.REACT_APP_SERVER_SENT_EVENT_IP;
+
 export default function Main() {
   const navigate = useNavigate();
 
@@ -62,6 +64,31 @@ export default function Main() {
       : "",
     pit: localStorage.getItem("pit") ? localStorage.getItem("pit") : "",
   });
+
+  useEffect(() => {
+    const eventSource = new EventSource(sseUrl, {withCredentials: true});
+
+    eventSource.addEventListener("article update", function (event) {
+      console.log(event);
+      console.log("New event from server:", event.data);
+      // 새로 등록된 기사가 있다는 의미 이므로 기사 재요청
+    });
+
+    eventSource.onmessage = function (event) {
+      console.log(event);
+      console.log("New event from server:", event.data);
+    };
+
+    eventSource.onerror = function (error) {
+      console.error("EventSource failed:", error);
+      // eventSource.close(); // 연결 문제 발생 시 연결을 종료합니다.
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+
 
   const handleDelete = (index, text) => {
     // 선택한 항목을 배열에서 제거합니다.

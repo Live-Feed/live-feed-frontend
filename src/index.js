@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 // Axios 전역 설정
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_IP;
+axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
