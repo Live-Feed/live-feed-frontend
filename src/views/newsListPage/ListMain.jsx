@@ -64,9 +64,7 @@ export default function ListMain() {
   const [_pit, setPit] = useState("");
   const [_lastId, setLastId] = useState(0);
   const [_lastScore, setLastScore] = useState(0);
-  const [_selectedItem, setSelectedItem] = useState(
-    localStorage.getItem("related") ? localStorage.getItem("related") : false
-  ); // false : 관련된순, true : 시간순
+  const [_selectedItem, setSelectedItem] = useState(false); // false : 관련된순, true : 시간순
   const preventRef = useRef(true); //옵저버 중복 실행 방지
 
   useEffect(() => {
@@ -139,6 +137,10 @@ export default function ListMain() {
     }
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("related", false);
+  }, []);
+
   const handleDelete = (index) => {
     // 선택한 항목을 배열에서 제거합니다.
     const updatedKeyword = keyword.filter((_, i) => i !== index);
@@ -159,7 +161,6 @@ export default function ListMain() {
   };
 
   const handleDropdownChange = (event) => {
-    // window.localStorage.setItem("type", event.target.value);
     setSelectedItem(event.target.value);
     localStorage.setItem("related", event.target.value);
     getData(true);
