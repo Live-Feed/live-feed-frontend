@@ -102,9 +102,7 @@ export default function ListMain() {
               state.type
             }&size=${
               state.size
-            }&lastId=${_lastId}&pit=${_pit}&lastScore=${_lastScore}&related=${localStorage.getItem(
-              "related"
-            )}`
+            }&lastId=${_lastId}&pit=${_pit}&lastScore=${_lastScore}&related=${_selectedItem}`
       )
       .then((response) => {
         // preventRef.current = true;
