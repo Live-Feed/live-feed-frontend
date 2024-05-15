@@ -86,7 +86,7 @@ export default function ListMain() {
     });
   };
 
-  const getData = (reLoading = false) => {
+  const getData = (reLoading = false, related = false) => {
     if (page === 1) setIsLoading(true);
     axios
       .get(
@@ -97,7 +97,7 @@ export default function ListMain() {
           : reLoading
           ? `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
               state.type
-            }&size=${state.size}&related=${_selectedItem}`
+            }&size=${state.size}&related=${related}`
           : `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
               state.type
             }&size=${
@@ -160,8 +160,8 @@ export default function ListMain() {
 
   const handleDropdownChange = (event) => {
     setSelectedItem(event.target.value);
-    localStorage.setItem("related", event.target.value);
-    getData(true);
+    // localStorage.setItem("related", event.target.value);
+    getData(true, event.target.value);
   };
 
   const handleClose = (event, reason) => {
