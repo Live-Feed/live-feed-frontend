@@ -32,7 +32,6 @@ function App() {
     };
   }, []);
 
-
   if (window.localStorage.getItem("type") === null) {
     window.localStorage.setItem("type", "articleTitle,bodyHtml");
   }
