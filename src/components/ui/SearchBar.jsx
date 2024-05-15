@@ -10,16 +10,20 @@ import AddIcon from "@mui/icons-material/Add";
 
 function SearchBar(props) {
   const [isTooltip, setIsTooltip] = useState(false);
+
   useEffect(() => {
     // 로컬 스토리지에서 저장된 배열을 가져옵니다.
     const storedKeyword = JSON.parse(localStorage.getItem("keyword"));
+    const storedActiveTags = JSON.parse(localStorage.getItem("activeTags"));
     if (storedKeyword) {
       props.setKeyword(storedKeyword);
+    }
+    if (storedActiveTags) {
+      props.setActiveTags(storedActiveTags);
     }
   }, [props]);
 
   const handleInputChange = (event) => {
-    // props.setInputText(event.target.value);
     if (event.target.value.length <= 6) {
       setIsTooltip(false);
       props.setInputText(event.target.value);
@@ -33,16 +37,19 @@ function SearchBar(props) {
       } else {
         // 입력한 텍스트를 배열에 추가합니다.
         const updatedKeyword = [...props.keyword, props.inputText];
-        console.log(updatedKeyword);
         props.setKeyword(updatedKeyword);
+
+        const updateActiveTags = [...props.activeTags, props.inputText];
+        props.setActiveTags(updateActiveTags);
 
         // 로컬 스토리지에 배열을 저장합니다.
         localStorage.setItem("keyword", JSON.stringify(updatedKeyword));
+        localStorage.setItem("activeTags", JSON.stringify(updateActiveTags));
 
         // api에 보내줄 데이터도 수정합니다.
         props.setRequestData({
           ...props.requestData,
-          keyword: updatedKeyword,
+          keyword: updateActiveTags,
         });
 
         // 입력 필드를 초기화합니다.

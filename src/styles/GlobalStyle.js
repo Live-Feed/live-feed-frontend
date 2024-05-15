@@ -9,6 +9,8 @@ const GlobalStyle = createGlobalStyle`
     /* 다른 글로벌 스타일을 추가할 수도 있습니다. */
     display: flex;
     justify-content: center;
+    margin: 0px;
+    height: 100vh
   }
 `;
 
