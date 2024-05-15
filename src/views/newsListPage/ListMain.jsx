@@ -102,8 +102,8 @@ export default function ListMain() {
             }&size=${state.size}&related=${_selectedItem}`
           : `/api/list/articles?keyword=${state.keyword.join(",")}&type=${
               state.type
-            }&size=${state.size}&sort=${
-              state.sort
+            }&size=${
+              state.size
             }&lastId=${_lastId}&pit=${_pit}&lastScore=${_lastScore}&related=${localStorage.getItem(
               "related"
             )}`
