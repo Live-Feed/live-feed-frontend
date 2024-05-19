@@ -16,10 +16,14 @@ function App() {
     const eventSource = new EventSource(sseUrl, { withCredentials: true });
 
     eventSource.addEventListener("article update", function (event) {
-      console.log(event);
       console.log("New article update event from server:", event.data);
       // 새로 등록된 기사가 있다는 의미 이므로 기사 재요청
       dispatch({ type: 'SET_IS_NEW', payload: true})
+    });
+
+    eventSource.addEventListener("keywords ranking update", function (event) {
+      console.log("keywords ranking update event from server:", event.data);
+      // 랭킹 수정
     });
 
     eventSource.onmessage = function (event) {
