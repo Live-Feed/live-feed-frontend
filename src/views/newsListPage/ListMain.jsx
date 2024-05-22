@@ -19,6 +19,8 @@ import {
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useGlobalDispatch, useGlobalState } from "../../context/GlobalState";
+import Rank from "../../components/ui/Rank";
 
 const Container = styled.div`
   display: flex;
@@ -60,12 +62,15 @@ export default function ListMain() {
   const [page, setPage] = useState(1);
   const [_isLast, setIsLast] = useState(false);
   const [_isLoading, setIsLoading] = useState(false);
-  const [_isNew, setIsNew] = useState(true);
+  // const [_isNew, setIsNew] = useState(true);
   const [_pit, setPit] = useState("");
   const [_lastId, setLastId] = useState(0);
   const [_lastScore, setLastScore] = useState(0);
   const [_selectedItem, setSelectedItem] = useState(false); // false : 관련된순, true : 시간순
   const preventRef = useRef(true); //옵저버 중복 실행 방지
+
+  const { isNew } = useGlobalState();
+  const dispatch = useGlobalDispatch();
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersect, {
@@ -168,8 +173,13 @@ export default function ListMain() {
     if (reason === "clickaway") {
       return;
     }
+    setLastId(0);
+    setPit("");
 
-    setIsNew(false);
+    window.scrollTo(0, 0);
+    getData(true, _selectedItem);
+
+    dispatch({type: 'SET_IS_NEW', payload: false})
   };
 
   const action = (
@@ -188,6 +198,7 @@ export default function ListMain() {
 
   return (
     <Container>
+      <Rank/>
       <TagBox>
         {keyword.map((text, index) => (
           <Tag
@@ -241,7 +252,8 @@ export default function ListMain() {
         {<div className="sentinel"></div>}
       </ArticleBox>
       <Snackbar
-        open={_isNew}
+        value={false}
+        open={isNew}
         onClose={handleClose}
         message="새로운 기사가 등록되었습니다."
         action={action}
