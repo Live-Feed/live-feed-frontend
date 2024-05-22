@@ -198,7 +198,9 @@ export default function ListMain() {
 
   return (
     <Container>
-      <Rank/>
+      <div style={{ position: "absolute", right: "40px", top: "100px" }}>
+        <Rank />
+      </div>
       <TagBox>
         {keyword.map((text, index) => (
           <Tag
