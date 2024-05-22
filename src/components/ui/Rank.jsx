@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useGlobalState } from "../../context/GlobalState";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 const RankBox = styled.div`
   width: 250px;
@@ -38,7 +38,7 @@ function Rank() {
   useEffect(() => {
     setRankings(keywords);
   }, [keywords]);
-  
+
   return (
     <RankBox>
       {rankings.map((item, index) => (

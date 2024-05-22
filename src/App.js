@@ -3,13 +3,12 @@ import Main from "./views/mainPage/Main";
 import ListMain from "./views/newsListPage/ListMain";
 import NavBar from "./components/ui/NavBar";
 import GlobalStyle from "./styles/GlobalStyle"; // 글로벌 스타일 파일을 가져옵니다.
-import { useEffect, useReducer } from "react";
-import { useGlobalDispatch, useGlobalState } from "./context/GlobalState";
+import { useEffect } from "react";
+import { useGlobalDispatch } from "./context/GlobalState";
 
 const sseUrl = process.env.REACT_APP_SERVER_SENT_EVENT_IP;
 
 function App() {
-
   const dispatch = useGlobalDispatch();
 
   useEffect(() => {
@@ -18,13 +17,16 @@ function App() {
     eventSource.addEventListener("article update", function (event) {
       console.log("New article update event from server:", event.data);
       // 새로 등록된 기사가 있다는 의미 이므로 기사 재요청
-      dispatch({ type: 'SET_IS_NEW', payload: true})
+      dispatch({ type: "SET_IS_NEW", payload: true });
     });
 
     eventSource.addEventListener("keywords ranking update", function (event) {
       console.log("keywords ranking update event from server:", event.data);
       // 랭킹 수정
-      dispatch({ type: 'SET_KEYWORDS_RANKING', payload: JSON.parse(event.data) })
+      dispatch({
+        type: "SET_KEYWORDS_RANKING",
+        payload: JSON.parse(event.data),
+      });
     });
 
     // eventSource.onmessage = function (event) {
@@ -41,6 +43,7 @@ function App() {
     return () => {
       eventSource.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (window.localStorage.getItem("type") === null) {
