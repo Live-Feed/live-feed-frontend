@@ -26,11 +26,11 @@ function App() {
       // 랭킹 수정
     });
 
-    eventSource.onmessage = function (event) {
-      console.log(event);
-      console.log("New event from server:", event.data);
-      dispatch({ type: 'SET_IS_NEW', payload: true})
-    };
+    // eventSource.onmessage = function (event) {
+    //   console.log(event);
+    //   console.log("New event from server:", event.data);
+    //   dispatch({ type: 'SET_IS_NEW', payload: true})
+    // };
 
     eventSource.onerror = function (error) {
       console.error("EventSource failed:", error);

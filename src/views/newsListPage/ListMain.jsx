@@ -172,16 +172,13 @@ export default function ListMain() {
     if (reason === "clickaway") {
       return;
     }
-    console.log("isNew = ", isNew)
-
     setLastId(0);
     setPit("");
 
-    // 호출 로직 실행 - 동민아 이부분에 다시 새로운 기사 호출하면 될것 같은데 하다가 실패했다...
+    window.scrollTo(0, 0);
+    getData(true, _selectedItem);
 
-
-    dispatch({type: 'SET_IS_NEW', payload: false})  // 다시 false 상태로 바꿈 -> server sent event 를 받으면 isNew 값이 true 로 바뀜
-    // setIsNew(false);
+    dispatch({type: 'SET_IS_NEW', payload: false})
   };
 
   const action = (
