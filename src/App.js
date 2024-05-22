@@ -24,6 +24,7 @@ function App() {
     eventSource.addEventListener("keywords ranking update", function (event) {
       console.log("keywords ranking update event from server:", event.data);
       // 랭킹 수정
+      dispatch({ type: 'SET_KEYWORDS_RANKING', payload: JSON.parse(event.data) })
     });
 
     // eventSource.onmessage = function (event) {

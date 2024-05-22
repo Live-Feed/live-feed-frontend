@@ -4,7 +4,8 @@ const GlobalStateContext = createContext();
 const GlobalDispatchContext = createContext();
 
 const initialState = {
-  isNew: false
+  isNew: false,
+  keywords: []
 }
 
 const reducer = (state, action) => {
@@ -13,6 +14,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         isNew: action.payload
+      };
+    case 'SET_KEYWORDS_RANKING':
+      return {
+        ...state,
+        keywords: action.payload
       };
     default:
       return state;

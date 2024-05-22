@@ -1,4 +1,6 @@
 import { styled } from "styled-components";
+import { useGlobalState } from "../../context/GlobalState";
+import { useEffect, useState, useRef } from "react";
 
 const RankBox = styled.div`
   width: 250px;
@@ -30,18 +32,13 @@ const RankTitle = styled.div`
 `;
 
 function Rank() {
-  const rankings = [
-    "손흥민",
-    "박태환",
-    "김연아",
-    "박지성",
-    "이연희",
-    "배정남",
-    "류현진",
-    "김기덕",
-    "김용만",
-    "박상범",
-  ];
+  const [rankings, setRankings] = useState([]);
+  const { keywords } = useGlobalState();
+
+  useEffect(() => {
+    setRankings(keywords);
+  }, [keywords]);
+  
   return (
     <RankBox>
       {rankings.map((item, index) => (

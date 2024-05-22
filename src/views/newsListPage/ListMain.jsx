@@ -20,6 +20,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useGlobalDispatch, useGlobalState } from "../../context/GlobalState";
+import Rank from "../../components/ui/Rank";
 
 const Container = styled.div`
   display: flex;
@@ -197,6 +198,7 @@ export default function ListMain() {
 
   return (
     <Container>
+      <Rank/>
       <TagBox>
         {keyword.map((text, index) => (
           <Tag
