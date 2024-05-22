@@ -45,6 +45,8 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const sseUrl = process.env.REACT_APP_SERVER_SENT_EVENT_IP;
+
 export default function Main() {
   const navigate = useNavigate();
 
